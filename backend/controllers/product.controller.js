@@ -113,3 +113,21 @@ export async function getProductsByCategory(req, res) {
     res.status(500).json({success: false, error: "Internal server error"});
   }
 }
+
+export async function toggleFeaturedProduct(req, res) {
+  try {
+    const productId = req.params.productId;
+    const product = await Product.findById(productId);
+
+    if(product) {
+      product.isFeatured = !product.isFeatured;
+      const updatedProduct = await product.save();
+      res.status(200).json({success: true, updatedProduct});
+    } else {
+      res.status(404).json({success: false, error: "Product not found"});
+    }
+  } catch (error) {
+    console.error(`Error toggling featured product: ${error.message}`);
+    res.status(500).json({success: false, error: "Internal server error"});
+  }
+}
