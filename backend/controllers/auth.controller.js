@@ -98,7 +98,7 @@ export async function refreshToken(req, res) {
 
     generateAccessToken(user._id, res)
 
-    res.status(200).json({message: "Token refreshed successfully"});
+    res.status(200).json({success: true, message: "Token refreshed successfully"});
   } catch (error) {
     console.error(`Error refreshing token: ${error.message}`);
     res.status(500).json({success: false, error: "Internal server error"});
