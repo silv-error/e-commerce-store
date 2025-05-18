@@ -2,16 +2,16 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import {} from "express-rate-limiter";
 
 import connectDB from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
-import { accessRoute } from "../middleware/auth.middleware.js";
+import { accessRoute } from "./middleware/auth.middleware.js";
 
 import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import couponRoutes from "./routes/coupon.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 
 dotenv.config();
 
@@ -26,7 +26,8 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", accessRoute, cartRoutes);
-app.use("/api/coupon", couponRoutes);
+app.use("/api/coupon", accessRoute, couponRoutes);
+app.use("/api/payments", accessRoute, paymentRoutes);
 
 await connectDB().then(() => {
   app.listen(PORT, () => {

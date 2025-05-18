@@ -5,7 +5,7 @@ const rateLimiter = rateLimit({
   limit: 100,
   standardHeaders: "draft-8",
   legacyHeaders: false,
-  handler: (_, res, _) => {
+  handler: (_, res) => {
     res.status(429).json({ error: "You are being rate limited!" });
   },
 });
