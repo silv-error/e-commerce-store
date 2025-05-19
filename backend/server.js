@@ -12,6 +12,7 @@ import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import couponRoutes from "./routes/coupon.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
+import analyticsRoutes from "./routes/analytics.routes.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", accessRoute, cartRoutes);
 app.use("/api/coupon", accessRoute, couponRoutes);
 app.use("/api/payments", accessRoute, paymentRoutes);
+app.use("/api/analytics", accessRoute, analyticsRoutes);
 
 await connectDB().then(() => {
   app.listen(PORT, () => {
