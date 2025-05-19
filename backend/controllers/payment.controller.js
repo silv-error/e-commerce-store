@@ -4,7 +4,10 @@ import Coupon from "../models/coupon.model.js";
 import Order from "../models/order.model.js";
 import { stripe } from "../config/stripe.js";
 
-import { createNewCoupon, createStripeCoupon } from "../libs/utils/stripe.js";
+import {
+  createNewCoupon,
+  createStripeCoupon,
+} from "../libs/utils/createCoupons.js";
 
 dotenv.config();
 
@@ -24,7 +27,7 @@ export const createCheckoutSession = async (req, res) => {
 
       return {
         price_data: {
-          currenty: "usd",
+          currency: "usd",
           product_data: {
             name: product.name,
             image: [product.image],
@@ -57,8 +60,8 @@ export const createCheckoutSession = async (req, res) => {
       discounts: coupon
         ? [{ coupon: await createStripeCoupon(coupon.discountPercentage) }]
         : [],
+      // for additional information
       metadata: {
-        // for additional information
         userId: req.user.id.toString(),
         couponCode: couponCode || "",
         products: JSON.stringify(
